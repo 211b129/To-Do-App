@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">To-Do-App</string>
+    <string name="_30_4_2023">30-4-2023</string>
+    <string name="this_is_task_1">This is task 1</string>
 </resources>
