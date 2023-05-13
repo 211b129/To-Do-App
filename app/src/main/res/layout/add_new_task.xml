@@ -38,6 +38,7 @@
         android:id="@+id/save_btn"
         android:layout_width="103dp"
         android:layout_height="48dp"
+        android:onClick="onClick"
         android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.97"
