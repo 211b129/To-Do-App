@@ -10,8 +10,20 @@ import android.os.Bundle;
 import android.view.View;
 
 
+import com.example.to_do_app.Adapter.ToDoAdapter;
+import com.example.to_do_app.Model.ToDoModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FloatingActionButton mFab;
     private FirebaseFirestore firestore;
+    private ToDoAdapter adapter;
+    private List<ToDoModel> mList;
+    private Query query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +53,28 @@ public class MainActivity extends AppCompatActivity {
                 AddNewTask.newInstance().show(getSupportFragmentManager() , AddNewTask.TAG);
             }
         });
-    }
 
+        mList = new ArrayList<>();
+        adapter = new ToDoAdapter(MainActivity.this , mList);
+
+        showData();
+        recyclerView.setAdapter(adapter);
+    }
+    private void showData() {
+        firestore.collection("task").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                for (DocumentChange documentChange : value.getDocumentChanges()) {
+                    if (documentChange.getType() == DocumentChange.Type.ADDED) {
+                        String id = documentChange.getDocument().getId();
+                        ToDoModel toDoModel = documentChange.getDocument().toObject(ToDoModel.class).withId(id);
+                        mList.add(toDoModel);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+                Collections.reverse(mList);
+            }
+        });
+
+    }
 }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +25,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
 
     public ToDoAdapter(MainActivity mainActivity, List<ToDoModel> todoList){
         this.todoList=todoList;
-        activity= MainActivity;
+        activity= mainActivity;
 
     }
     @NonNull
@@ -45,7 +46,17 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
 
         holder.mCheckBox.setChecked(toBoolean(toDoModel.getStatus()));
 
-        holder.mCheckBox.setOnCheckedChangeListener();
+        holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    firestore.collection("task").document(toDoModel.TaskId).update("status",1);
+                }else {
+                    firestore.collection("task").document(toDoModel.TaskId).update("status",0);
+                }
+            }
+        });
 
     }
 
