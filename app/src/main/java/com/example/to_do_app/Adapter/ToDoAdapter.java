@@ -1,5 +1,7 @@
 package com.example.to_do_app.Adapter;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.to_do_app.AddNewTask;
 import com.example.to_do_app.MainActivity;
 import com.example.to_do_app.Model.ToDoModel;
 import com.example.to_do_app.R;
@@ -58,6 +61,27 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
             }
         });
 
+    }
+    public void deleteTask(int position){
+        ToDoModel toDoModel = todoList.get(position);
+        firestore.collection("task").document(toDoModel.TaskId).delete();
+        todoList.remove(position);notifyItemRemoved(position);
+    }
+
+    public Context getContext(){
+        return activity;
+    }
+
+    private void editTask(int position){
+        ToDoModel toDoModel = todoList.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putString("task",toDoModel.getTask());
+        bundle.putString("due", toDoModel.getDue());
+        bundle.putString("id", toDoModel.TaskId);
+
+        AddNewTask addNewTask = new AddNewTask();
+        addNewTask.setArguments(bundle);
+        addNewTask.show(activity.getSupportFragmentManager(),addNewTask.getTag());
     }
 
     private boolean toBoolean(int status){

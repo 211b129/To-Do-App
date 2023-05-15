@@ -32,7 +32,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddNewTask extends BottomSheetDialogFragment {
+public class  AddNewTask extends BottomSheetDialogFragment {
     public static final String TAG = "AddNewTask";
 
     private TextView setDueDate;
