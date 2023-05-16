@@ -45,4 +45,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/task_edittext" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="37dp"
+        android:layout_height="33dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/baseline_mic_24"
+        app:layout_constraintBottom_toBottomOf="@+id/task_edittext"
+        app:layout_constraintEnd_toEndOf="@+id/task_edittext"
+        app:layout_constraintHorizontal_bias="0.957"
+        app:layout_constraintStart_toStartOf="@+id/task_edittext"
+        app:layout_constraintTop_toTopOf="@+id/task_edittext"
+        app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
