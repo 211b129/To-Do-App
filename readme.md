@@ -4,7 +4,7 @@ A simple to-do app that helps you keep track of your tasks.
 
 #Features
 
-1. Add tasks
+1. Add tasks.
 2. Mark tasks as completed
 4. Set due dates for tasks
 
